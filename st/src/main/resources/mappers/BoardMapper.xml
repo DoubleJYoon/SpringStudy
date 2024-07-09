@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardMapper">
+
+	<resultMap type="com.a.ezn.BoardVO" id="boardMap">
+		<id property="sno" column="sno"/>
+		<result property="title" column="title"/>
+		<result property="body" column="body"/>
+		<result property="writer" column="writer"/>
+		<result property="rdate" column="rdate"/>
+	</resultMap>
+	
+	<select id="getAll" resultMap="boardMap">
+		select * from sampleTB
+	</select>
+	
+	<select id="findById" parameterType="int" resultMap="boardMap">
+		select * from sampleTB where sno = #{sno}
+	</select>
+	
+	<insert id="insert" parameterType="com.a.ezn.BoardVO" useGeneratedKeys="true" keyProperty="sno">
+		insert into sampleTB(title, body, writer, rdate)
+		values(#{title}, #{body}, #{writer}, now());
+	</insert>
+	<update id="update" parameterType ="com.a.ezn.BoardVO">
+		update sampleTB set title = #{title}, body =#{body}, writer =#{writer} where sno = #{sno};
+	</update>
+	<delete id="delete" parameterType ="int">
+		delete from sampletb where sno = #{sno};
+	</delete>
+</mapper>
